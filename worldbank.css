@@ -1,0 +1,780 @@
+/* CSS stylesheet of the worldbank interface */
+/* 18.05.2015 larsverspohl */
+
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font: 12px "Lucida Grande", sans-serif;
+	margin: 0;
+}
+
+h1 {
+	font: 12px "Lucida Grande", sans-serif;
+}
+
+/* --- CSS sections ----------------------------------------------------------------- */
+
+section#controlTop {
+	position: fixed;
+	top: 0; left: 0;
+	width: 100%;
+	background-color: rgba(255,255,255,0.9); /*slight transparency*/
+	z-index: 10;
+}
+
+section#content {
+	top: 0; left: 0;
+	width: 100%;
+  background-color: #fff;
+}
+
+section#controlBottom {
+	position: fixed;
+	bottom: 0; left: 0;
+	width: 100%;
+  background-color: #fff;
+	z-index: 10;
+}
+
+
+/* --- CSS navbar ----------------------------------------------------------------- */
+
+/* in nav.css */
+
+/* --- CSS Filters ------------------------------------------------------------------ */
+
+div#wrapperFilters {
+	width: 95%;
+	margin: 0 auto;
+	overflow: visible; /* to let dropdown flow over */
+	position: relative;
+}
+div.filters#left {
+	width: 50%;
+	float: left;
+}
+div.filters#right {
+	width: 50%;
+	overflow: hidden;
+}
+
+/* the following 3 specifications allow for the divs to maintain aspect-ratio */
+div.boxFilters,
+div.boxFiltersSingleCol {
+	border-bottom: 1px solid #ccc;
+	position: relative;
+}	
+div.boxFilters:before {
+	content: "";
+	display: block;
+	padding-top: 19%;   /* this padding specifies the aspect-ratio height/width */
+}
+
+/* only used for single column (= one-sided) layout, only needed for Filters and Context */
+div.boxFiltersSingleCol:before {
+	content: "";
+	display: block;
+	padding-top: 9%;
+}
+
+div.containerFilters {
+	position: absolute;
+	top: 0;	right: 0;	bottom: 0; left: 0;
+	margin: 2%;
+  overflow: scroll;
+}
+
+div.containerFiltersHidden {
+	position: absolute;
+	top: 0;	right: 0;	bottom: 0; left: 0;
+	margin: 2%;
+  overflow: hidden;
+}
+
+
+div.containerFiltersHidden::-webkit-scrollbar {
+	display: none;
+}
+
+p#buildHeadOne {
+	color: #999;
+	margin: 0;
+}
+p#buildHeadTwo {
+	color: #ddd;
+	margin: 0;
+	margin: 2% 0%;
+}
+
+div.filterExplain {
+	display: inline-block;
+	margin: .25em;
+	padding: .25em;
+	outline: none;
+	border-bottom: 1px solid #e6e6e6;
+	font-weight: bold;
+	border-radius: 1px;
+	color: #999;
+	font-size: 12px;
+}
+
+button.btn {
+	display: inline-block;
+	margin: .25em;
+	padding: .25em;
+	outline: none;
+	background-color: #e6e6e6;
+	border: none;
+	border-radius: 1px;
+}
+
+div.questions,
+div.label {
+	display: block;
+	width: 90%;
+	margin: .25em;
+	padding-left: .5em;
+	height: 2em;
+	line-height: 2em;
+	text-align: left;
+	background-color: #e6e6e6;
+	color: #555;
+	border: none;
+	border-radius: 1px;
+	cursor: pointer;
+}
+div.label {
+	pointer-events: none;
+	font-weight: bold;
+}
+div.questions:hover {
+	opacity: 0.7;
+}
+
+button.btn.extra {
+	background-color: #fff;
+	color: #666;
+	border: 1px solid #ccc;
+}
+button.btn.extra.All {
+	border-bottom: 1px solid #222;
+}
+
+button:hover {
+	opacity: .8;
+	cursor: pointer;
+}
+
+/* --- CSS Content ----------------------------------------------------------------- */
+
+div#wrapperContent {
+	width: 95%;
+	top: 0; left: 0;
+	margin: 13% auto 4% auto; /*changed*/
+/*	overflow: hidden;*/
+}
+div.contentInner#left {
+	width: 50%;
+	float: left;
+}
+div.contentInner#right {
+	width: 50%;
+	overflow: hidden;
+}
+
+/* the following 3 specifications allow for the divs to maintain aspect-ratio */
+div.boxContent,
+div.boxContentDash,
+div.boxContentScatter, 
+div.boxContentScatterBars {
+	position: relative;
+}
+div.boxContent:before {
+	content: "";
+	display: block;
+	padding-top: 55%;   /* this padding specifies the aspect-ratio height/width */
+}
+div.containerContent {
+	position: absolute;
+	top: 0;	right: 0;	bottom: 0; left: 0;
+}
+
+/* dashboard div height smaller */
+div.boxContentDash:before {
+	content: "";
+	display: block;
+	padding-top: 25%;
+}
+
+div.boxContentScatter:before {
+	content: "";
+	display: block;
+	padding-top: 60%;
+}
+
+div.boxContentScatterBars:before {
+	content: "";
+	display: block;
+	padding-top: 73.3%; 
+	/* this padding-top % is calculated so the height of this div equals the height of its neighbouring div (the bubble chart)
+	 	the calculation divides the desired height in pixels (from .boxContentScatter) by the actual width in pixels (from this div) */
+}
+
+.yAxisLabel {
+	text-anchor: end;
+	fill: #999
+}
+
+div.legend {
+	width: 76%;
+	height: 5%;
+	position: absolute;
+	bottom: 0%;
+	right: 15%;
+	display: none;
+}
+
+ 
+/* --- CSS summary dashboard -------------------------------------------------------- */
+
+div#summaryHeadline {
+	width: 100%;
+	padding: 20px;
+/*	border: 5px solid red;*/
+}
+
+div#summaryHeadline h1 {
+	color: #999;
+	font-size: 2em;
+	text-align: center;
+	margin: .25em;
+}
+
+div#summaryHeadline p {
+	color: #999;
+	font-size: 1em;
+	text-align: center;
+}
+
+
+ 
+/* --- CSS Brush context ----------------------------------------------------------- */
+
+div#wrapperContext {
+	width: 95%;
+	margin: 0 auto;
+	overflow: hidden;
+	position: relative;
+	border-top: 1px solid #999;
+	display: none;
+}
+div.context#left {
+	width: 50%;
+	float: left;
+}
+div.context#right {
+	width: 50%;
+	overflow: hidden;
+}
+
+/* the following 3 specifications allow for the divs to maintain aspect-ratio */
+div.boxContext,
+div.boxContextSingleCol {
+	position: relative;
+}	
+div.boxContext:before {
+	content: "";
+	display: block;
+	padding-top: 8%;   /* this padding specifies the aspect-ratio height/width, change in accordance with below "height2" */
+}
+
+/* only used for single column (= one-sided) layout, only needed for Filters and Context */
+div.boxContextSingleCol:before {
+	content: "";
+	display: block;
+	padding-top: 4%;
+}
+
+div.containerContext {
+	position: absolute;
+	top: 0;	right: 0;	bottom: 0; left: 0;
+}
+
+g.brush > rect {
+	fill: #F64747; /*sunset orange*/
+	fill-opacity: .3;
+}
+.slider {
+	fill: #F64747; /*sunset orange*/
+}
+
+g.contextSvg > text {
+	text-anchor: middle;
+	fill: #F64747;
+	opacity: .6; /*sunset orange*/
+}
+
+
+
+/* --- CSS SVG ----------------------------------------------------------------- */
+
+	
+svg text.graphHeader {
+	fill: #666;
+	font-size: 1.2em;
+	text-anchor: middle;
+	cursor: pointer;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #999;
+	stroke-width: 1px;
+  shape-rendering: crispEdges;
+}
+.axis.zerolabels path,
+.axis.zerolabels line {
+  fill: none;
+	stroke-width: 0px;
+}
+
+.axis text {
+	fill: #999;	
+}
+
+.axis text {
+	fill: #999;	
+}
+
+svg {
+	font: 10px "Lucida Grande", sans-serif;
+}
+
+path.line.main {
+	stroke: #ccc;	
+	stroke-width: 1.5px;
+	fill: none;
+}
+path.line.hoverHelp {	
+	stroke: #999;
+	stroke-width: 10px;
+	fill: none;
+	opacity: 0;
+}
+path.line.main.gender,
+path.line.main.segment {
+	stroke-width: 0px;
+	fill: none;
+	pointer-events: none;
+}
+#line {
+  clip-path: url(#clip);
+}
+
+/* omit axis for dashboard, scatter */
+.axis.dash path, .axis.dash line,
+.axis.zVar path, .axis.zVar line,
+.axis.yVar path, .axis.yVar line,
+.axis.xVar path, .axis.xVar line {
+  fill: none;
+  stroke: none;
+}
+.axis.dash text, .axis.zVar text,
+.axis.yVar text, .axis.xVar text {
+	fill: none;
+}
+
+
+
+.y.axis.zVar > .domain,
+.y.axis.yVar > .domain,
+.y.axis.xVar > .domain {
+	display: inherit;
+  fill: none;
+  stroke: #999;
+	stroke-width: 1px;
+  shape-rendering: crispEdges;
+}
+
+
+
+/* barChart long tick-lines */
+.axis.bar path {
+	display: none;
+}
+
+.axis.bar line {
+  fill: none;
+  stroke: #fff;
+	stroke-width: 1px;
+  shape-rendering: crispEdges;
+}
+
+
+/* bubble */
+circle.bubble {
+	opacity: .5;
+}
+
+text.barlabel, 
+text.headline:not(.scatter) {
+	cursor: pointer;
+}
+
+
+
+/* -- table css ---------------------------------------------------------------------- */
+
+h1.tableHeader {
+	position: absolute;
+	margin-left: 5.5%;
+}
+
+div.excelExport {
+	color: #ccc;
+	position: absolute;
+	display: inline-block;
+	padding: 0 1em 0 1em;
+	right: 3%;
+	top: 3%;
+	transition: all 0.3s ease;
+	cursor: pointer;
+}
+
+div.heatMapBtn {
+	color: #ccc;
+	position: absolute;
+	display: inline-block;
+	padding: 0 .5em 0 .5em;
+	right: 9%;
+	top: 3%;
+	transition: all 0.3s ease;
+	cursor: pointer;
+}
+
+div.excelExport:hover, 
+div.heatMapBtn:hover {
+	color: #777;
+}
+
+/* necessary (read below) */
+div.containerInnerBox {
+	position: relative;
+	height: 100%;
+	width: 100%;
+}
+
+/* 'overflow' requires to be placed within a relative container specifying width and height 
+	 (depending on the overflow direction required) */
+div.containerInner {
+	position: relative;
+	height: 80%;
+	width: 90%;
+	top: 10%;
+	left: 5%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	white-space: nowrap;
+}
+
+div.containerInner::-webkit-scrollbar {
+	display: none;
+}
+
+div.containerNumber {
+	display: inline-block;
+	overflow-x: scroll;
+}
+
+div.containerNumber::-webkit-scrollbar {
+	display: none;
+}
+
+
+table {
+	border-spacing:0.2rem;
+	font-size: 0.9em;
+}
+
+table.answerCategories {
+	display: inline-block;
+}
+
+table.numbers {
+	text-align: right;
+}
+
+tbody tr:nth-child(odd) {
+	background:#eee;
+}
+
+table.numbers tbody tr:hover {
+	background: #E4F1FE;
+}
+
+
+/* --- CSS Modal ----------------------------------------------------------------- */
+
+div.modal {
+	/* some styles to position the modal at the center of the page */
+	display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 700px;
+  height: 430px;
+  margin-left: -400px;
+  margin-top: -220px;
+	padding: 30px 50px;
+  background-color: #eee;
+	color: #333;
+  text-align: center;
+
+  /* needed styles for the overlay */
+  z-index: 10; /* keep on top of other elements on the page */
+  outline: 9999px solid rgba(0,0,0,0.5);
+}
+
+
+span#HDI > a:link,
+span#HDI > a:hover,
+span#HDI > a:active,
+span#HDI > a:visited {
+	text-decoration: none;
+	font-weight: bold;
+	color: #4183D7;
+	padding: 5px;
+	transition: background-color 0.5s ease;
+}
+
+span#HDI > a:hover {
+	background-color: #fff;
+}
+
+div#setDevLevel {
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+}
+
+ul.choice {
+	list-style: none;
+	padding: 0;
+	
+	margin: 10px;
+	flex: 0 1 80px;
+}
+
+div#setDevLevel > div {
+	margin: 10px 0;
+	align-self: center;
+}
+
+ul.choice > li:hover,
+ul.choice > li.locked {
+	cursor: pointer;
+	background-color: #ddd;
+}
+
+button.btn#modalSubmit {
+	padding: .5em 1em;
+	background-color: #7FA0FF;
+/*	background-color: blue;*/
+	border-radius: 1px;
+}
+
+button.btn#modalCancel {
+	padding: .5em 1em;
+	background-color: #ddd;
+	border-radius: 1px;
+}
+
+
+/* --- CSS Home and load --------------------------------------------------------------- */
+	
+div#home, 
+div#loadingContainer {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+p#loading {
+	max-width: 70%; /* to center horizontally */
+	color: #aaa;
+	padding: 15px 25px;
+	border: 5px solid #ccc;
+}
+div#homeContent {
+	width: 80%;
+	height: 80%;
+	color: #555;
+	padding: 20px 55px;
+	/*border: 1px solid #999;*/
+	overflow: scroll;	
+}
+
+/*Shadow effect from https://css-tricks.com/almanac/properties/b/box-shadow/*/
+
+div#homeContent
+{
+    position:relative;
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+       -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+div#homeContent:before, div#homeContent:after
+{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    -webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    box-shadow:0 0 20px rgba(0,0,0,0.8);
+    top:50%;
+    bottom:0;
+    left:10px;
+    right:10px;
+    -moz-border-radius:100px / 10px;
+    border-radius:100px / 10px;
+}
+div#homeContent:after
+{
+    right:10px;
+    left:auto;
+    -webkit-transform:skew(8deg) rotate(3deg);
+       -moz-transform:skew(8deg) rotate(3deg);
+        -ms-transform:skew(8deg) rotate(3deg);
+         -o-transform:skew(8deg) rotate(3deg);
+            transform:skew(8deg) rotate(3deg);
+}
+
+
+/*Shadow effect end*/
+
+
+div#homeContent > h1 {
+	margin: .5em;
+	margin-bottom: 1em;
+	font-size: 2em;
+	text-align: center;
+}
+
+div#homeContent > p {
+	margin: .5em;
+	text-align: center;
+}
+
+
+div#homeContent a:link,
+div#homeContent a:hover,
+div#homeContent a:active,
+div#homeContent a:visited {
+	text-decoration: none;
+	font-weight: bold;
+	color: #4183D7;
+	padding: 5px;
+	transition: background-color 0.5s ease;
+}
+
+div#homeContent a:hover {
+	background-color: #eee;
+}
+
+span#summary,
+span#trends,
+span#explore {
+	cursor: default;
+}
+
+div#homeContent div:last-of-type {
+	display: flex;
+	justify-content: center;
+}
+
+button#launchApp {
+	padding: .5em 1em;
+	color: #333;
+	min-width: 15%;
+	background-color: #7FA0FF;
+}
+
+
+
+/* --- CSS Other ---------------------------------------------------------------------- */
+
+
+div.tooltip {
+  position: absolute;        
+	display: inline-block;
+	padding: 5px;             
+  background: #fff;
+  font: bold 10px "Lucida Grande", sans-serif;
+	border: 1px solid #999;
+	border-radius: 2px;
+	text-align: center;
+  pointer-events: none;         
+}
+
+div.qt {
+	position: relative;
+	width: 80%;
+	margin: 0 auto;
+	font-size: .95em;
+	color: #888;
+	text-align: center;
+}
+
+/* --- CSS responsive ----------------------------------------------------------------- */
+
+/* small tablet landscape and smaller */
+@media all and (max-width: 800px) {
+	body {
+		font: 10px  "Lucida Grande", sans-serif;
+		width:100%;
+		height:100%;
+	}
+	svg {
+		font: 8px "Lucida Grande", sans-serif;
+	}
+}
+
+/* mobile landscape and smaller */
+@media all and (max-width: 500px) {
+
+	body {
+		font: 10px sans-serif;
+		width:100%;
+		height:100%;
+	}
+	svg {
+		font: 4px "Lucida Grande", sans-serif;
+	}
+	
+	div#wrapperContent {
+		margin: 45% auto 4% auto;
+	}
+	div.contentInner#left, 
+	div.filters#left,
+	div.context#left {
+		width: 95%;
+		height: 95%;
+/*		float: left;*/
+	}
+	div.box {
+		width: 100%;
+	}
+	div.contentInner#right,
+	div.filters#right,
+	div.context#right {
+		width: 95%;
+		height: 95	%;
+/*		overflow: hidden;*/
+	}
+}
+

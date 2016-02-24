@@ -1,0 +1,267 @@
+<!-- HTML document of the worldbank interface -->
+<!-- 18.05.2015 larsverspohl -->
+
+
+<!DOCTYPE html>
+
+<html>
+<meta charset="utf-8">
+
+<head>
+
+<title>worldbank data | interface</title>
+<script src="lib/d3.v5.min.js"></script>
+<script src="lib/lodash-3.9.2.min.js"></script>
+<!-- <script src="http://d3js.org/colorbrewer.v1.min.js"></script> -->
+<link rel="stylesheet" type="text/css" href="worldbank.css">
+<link rel="stylesheet" type="text/css" href="nav.css">
+
+</head>
+
+<body>
+
+<!-- naming convention: [section name] > wrapper out (.outside) > wrapper inner (.inside) > box (.box) > container (.contain) -->
+
+<section id="controlTop">
+	<div id="wrapperFilters" class="outside">
+
+		<nav class="nav header"> 
+			<div class="nav brand"><img src="images/globe.png" alt="worldbank logo" height="25px" width="27.5px" ></div> <!--  height="25px" width="55px"  -->
+			<ul class="nav list">
+				
+				<li class="dash">
+					<span id="dashSpan">summarise</span> <!-- in span in order to be able to change name -->
+					<ul class="drop">
+						<li class="dashb" id="dashb0">growth index - wide</li>
+						<li class="dashb" id="dashb1">growth index - tight</li>
+					</ul>
+				</li>
+				
+				<li class="category">
+					<span id="categorySpan">trends</span> <!-- in span in order to be able to change name -->
+					<ul class="drop">
+						<li class="cat" id="cat0">population</li>
+						<li class="cat" id="cat1">rates</li>
+						<li class="cat" id="cat2">age</li>
+						<li class="cat" id="cat3">health</li>
+						<li class="cat" id="cat4">economy</li>
+						<li class="cat" id="cat5">urbanisation</li>
+					</ul>
+				</li>
+				
+				<li class="scatter">
+					<span id="scatterSpan">explore</span> <!-- in span in order to be able to change name -->
+					<ul class="drop">
+						<li class="scatt" id="scatter0">gdp vs older population</li>
+						<li class="scatt" id="scatter1">gdp vs younger population</li>
+						<li class="scatt" id="scatter2">fertility vs mortality</li>
+						<li class="scatt" id="scatter3">fertility vs old age</li>
+						<li class="scatt" id="scatter4">women vs birth rate (3d)</li>
+					</ul>
+				</li>
+				
+				<li class="builder extra">chart builder</li>
+
+				<li class="change extra">change dataset</li>
+				
+				<li class="period extra" id="pick">pick period
+					<ul class="drop">
+						<li class='period' id='p19610101'>1961</li>
+						<li class='period' id='p19620101'>1962</li>
+						<li class='period' id='p19630101'>1963</li>
+						<li class='period' id='p19640101'>1964</li>
+						<li class='period' id='p19650101'>1965</li>
+						<li class='period' id='p19660101'>1966</li>
+						<li class='period' id='p19670101'>1967</li>
+						<li class='period' id='p19680101'>1968</li>
+						<li class='period' id='p19690101'>1969</li>
+						<li class='period' id='p19700101'>1970</li>
+						<li class='period' id='p19710101'>1971</li>
+						<li class='period' id='p19720101'>1972</li>
+						<li class='period' id='p19730101'>1973</li>
+						<li class='period' id='p19740101'>1974</li>
+						<li class='period' id='p19750101'>1975</li>
+						<li class='period' id='p19760101'>1976</li>
+						<li class='period' id='p19770101'>1977</li>
+						<li class='period' id='p19780101'>1978</li>
+						<li class='period' id='p19790101'>1979</li>
+						<li class='period' id='p19800101'>1980</li>
+						<li class='period' id='p19810101'>1981</li>
+						<li class='period' id='p19820101'>1982</li>
+						<li class='period' id='p19830101'>1983</li>
+						<li class='period' id='p19840101'>1984</li>
+						<li class='period' id='p19850101'>1985</li>
+						<li class='period' id='p19860101'>1986</li>
+						<li class='period' id='p19870101'>1987</li>
+						<li class='period' id='p19880101'>1988</li>
+						<li class='period' id='p19890101'>1989</li>
+						<li class='period' id='p19900101'>1990</li>
+						<li class='period' id='p19910101'>1991</li>
+						<li class='period' id='p19920101'>1992</li>
+						<li class='period' id='p19930101'>1993</li>
+						<li class='period' id='p19940101'>1994</li>
+						<li class='period' id='p19950101'>1995</li>
+						<li class='period' id='p19960101'>1996</li>
+						<li class='period' id='p19970101'>1997</li>
+						<li class='period' id='p19980101'>1998</li>
+						<li class='period' id='p19990101'>1999</li>
+						<li class='period' id='p20000101'>2000</li>
+						<li class='period' id='p20010101'>2001</li>
+						<li class='period' id='p20020101'>2002</li>
+						<li class='period' id='p20030101'>2003</li>
+						<li class='period' id='p20040101'>2004</li>
+						<li class='period' id='p20050101'>2005</li>
+						<li class='period' id='p20060101'>2006</li>
+						<li class='period' id='p20070101'>2007</li>
+						<li class='period' id='p20080101'>2008</li>
+						<li class='period' id='p20090101'>2009</li>
+						<li class='period' id='p20100101'>2010</li>
+						<li class='period' id='p20110101'>2011</li>
+						<li class='period' id='p20120101'>2012</li>
+						<li class='period' id='p20130101'>2013</li>
+					</ul>
+				</li>
+				<li class="period extra" id="play">play it</li>
+				<li class="perspective extra">
+					<span id="perspSpan">lines</span>
+					<ul class="drop deepB">
+						<li class="persp" id="persp0">lines</li>
+						<li class="persp" id="persp1">bars</li>
+						<li class="persp" id="persp2">data</li>
+					</ul>
+				</li>
+				<li class="zoom extra">change year</li>
+				<li class="explanation">what's this?</li>
+			</ul>			
+		</nav>
+
+		<div class="filters inside" id="left"></div>
+		<div class="filters inside" id="right"></div>
+
+	</div>
+</section>
+
+<section id="content">
+
+	<div id="home">
+		<div id="homeContent">
+
+			<h1>This worldbank data interface</h1> 
+
+			<p>...is an attempt to show where the world is heading.</p>
+			<p>Or rather where the world has been heading for the past 50 years.</p>
+			</br>
+
+			<p>It looks at a number of coherent, topline metrics available from the phenomenal <a href="http://databank.worldbank.org/data/home.aspx" target="_blank">worldbank data source</a></p>
+			<p>and visualises them in a focussed and intuitive way to understand the world's course a little better.</p>
+			</br>
+
+			<p>It does so by providing a <strong><span id="summary">summary</span></strong>, 
+				<strong><span id="trends">development-trends</span></strong> 
+				and some specific <strong><span id="explore">explorations</span></strong>.</p>
+			</br>
+
+			<p>The <strong><span id="summary">summary</span></strong> gives us an overview of what levels of growth countries have seen throughout the past half-century.</p>
+			</br>
+
+			<p>The <strong><span id="trends">trends</span></strong> show the 30 most complete and meaningful metrics from the source data and how they developed per country.</p>
+			<p>The display is split by the <a href="https://en.wikipedia.org/wiki/Human_Development_Index" target="_blank">Human development index</a>, categorising countries according to their development level.</p>
+			<p>This allows comparison of for example highly developed countries with countries of hitherto low development.</p>
+			</br>
+
+			<p>You can view the data as line and bar graphs as well as in table form, or download it for further use.</p>
+			</br>
+
+			<p>The <strong><span id="explore">explore</span></strong> display picks out interestingly correlated variables and shows how they relate in a scatter plot.</p>
+			<p>You can also watch the dynamics change over the course of time focussing on all countries or only a subset.</p>
+			</br>
+
+			<p>Finally, the <strong><span id="builder">chart-builder</span></strong> lets you view each metric individually and allows splitting the trends by gender where available.</p>
+			</br>
+
+			<div><button class="btn" id="launchApp">step in ...</button></div>
+
+		</div>
+	</div>
+
+	<div id="loadingContainer">
+		<p id="loading"></p>
+	</div>
+
+	<div id="wrapperContent" class="outside">
+		<div class="contentInner inside" id="left"></div>
+		<div class="contentInner inside" id="right"></div>
+	</div>
+</section>
+
+<section id="controlBottom">
+	<div id="wrapperContext" class="outside">	
+		<div class="context inside" id="left"></div>
+		<div class="context inside" id="right"></div>
+	</div>
+</section>
+
+
+<div class="modal">
+
+	One of the key premises of this display is to compare levels and trends of country 'batches' with each other. 
+	Potentially you can cluster countries along countless axes - continents, sizes, languages, ...
+	But for our purpose we shall split the data along one main axis:
+
+	</br>	</br>
+
+	<span id="HDI">
+		<a href="https://en.wikipedia.org/wiki/Human_Development_Index" target="_blank">
+			The Human Development Index
+		</a>
+	</span> &nbsp; (HDI)
+
+	</br>	</br>
+
+	It's a composite measure based on life expectancy, education and income per capita 
+	and categorises countries (not all but most of them) into four tiers of human development:
+	
+	</br>	</br>
+
+	Very high, High, Medium and Low 
+
+	</br>	</br>
+
+	The metric is calculated by the UN and is produced rather for statistical convenience than 
+	judgemental analysis or rhetorics. Splitting trends along these lines can help 
+	understanding the HDI as well as getting a better view on the world's course.
+
+	</br> </br> Pick the levels you want to compare:
+
+	<div id="setDevLevel">
+
+		<ul class="choice" id="left">
+			<li class="VeryHigh">Very High</li>
+			<li class="High">High</li>
+			<li class="Medium">Medium</li>
+			<li class="Low">Low</li>
+		</ul>
+		<div>vs.</div>
+		<ul class="choice" id="right">
+			<li class="VeryHigh">Very High</li>
+			<li class="High">High</li>
+			<li class="Medium">Medium</li>
+			<li class="Low">Low</li>
+		</ul>
+		
+	</div>
+
+	</br>
+
+	<button class="btn" id="modalCancel">Cancel</button>
+	<button class="btn" id="modalSubmit">Submit</button>
+	
+	</br>
+
+</div>
+
+<script src="worldbank.js"></script>
+
+</body>
+
+</html>

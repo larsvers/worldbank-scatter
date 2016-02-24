@@ -1,0 +1,93 @@
+nav.nav.header {
+/*	background-image: linear-gradient(to bottom, #3c3c3c 0%, #222 100%);*/
+	background-color: #3c3c3c;
+	width: 100%;
+	z-index: 9;
+}
+
+div.nav.brand {
+	color: #ccc;
+	padding: 0em;
+	padding-left: .5em;
+	display: inline-block;
+	position: relative; /*changed from relative*/
+	top: 7px;
+	left: 5px;
+}
+
+ul.nav.list {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	margin-left: .5%;
+}
+ul.nav.list > li {
+	color: #ccc;
+	display: inline-block;
+	position: relative;
+	min-width: 10em;
+	padding: 1em;
+	margin-right: -0.3em;
+	text-align: center;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+}
+ul.nav.list > li:hover,
+ul.nav.list > li:active {
+	background-color: #222;
+	cursor: pointer;
+}
+
+/*ul.nav.list > li.extra {
+	color: #999;
+}
+*/
+
+ul.drop {
+	position: absolute;
+	width: 100%;
+	padding: 0;
+	top: 3.2em;
+	left: 0;
+	list-style: none;
+	background-color: #3c3c3c;
+	color: #ccc;
+	display: none;
+	opacity: 0;
+	visibility: hidden;
+	z-index: 9;
+}
+
+ul.drop > li {
+	display: block;
+	padding: .3em .6em .3em .8em;
+	text-align: left;
+}
+ul.drop > li:hover {
+	background-color: #222;
+/*	color: #fff;*/
+}
+
+ul.nav.list > li:hover > ul.drop {
+	display: block;
+	opacity: 1;
+	visibility: visible;
+}
+
+li.period > ul {
+	max-height: 15em;
+	overflow: scroll;
+}
+
+li.explanation {
+	float: right;
+	right: .3em;
+}
+
+div#explain {
+	position: fixed;
+}
