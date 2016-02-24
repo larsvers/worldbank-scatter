@@ -285,7 +285,6 @@ function god () {
 
 	// initialise area and category
 	var file = 'data/world.csv';
-	// var file = 'data/dashboard - tight index.csv';
 	var countrySelect = 'World';
 	var categorySelect = 'Population';
 	var perspectiveSelect = 'Lines';
@@ -298,19 +297,137 @@ function god () {
 	// 3 = brand capital file ! check
 	// 4 = chart builder with overall country file
 	
-	
-	d3.selectAll('li.change').style('display', 'inherit'); // zoom
-	d3.selectAll('li.perspective').style('display', 'inherit'); // visual
-	d3.selectAll('li.zoom').style('display', 'none'); // zoom
-	d3.selectAll('li.period').style('display', 'none'); // profile periods
+	d3.select('div#home').style('display', 'none'); // hide homepage html
 
-	// d3.selectAll('li.dash').style('color', '#fff'); // set colour
-	d3.selectAll('li.category').style('color', '#fff'); // set colour
-	d3.select('div#loadingContainer').style('display', 'none'); // hide quote
-	
-	// dashboard(file, countrySelect, categorySelect, perspectiveSelect);
-	
-	
+	// The runScatter function inits the scatterplot. It takes 3 arguments:
+ 	// 'that' takes in the this-context from the click if runScatter is run from the event-handler (ie when we click on the button)
+ 	// 'index' takes in an integer, indication which scatterplot we want. Check if statements in function for availabilities
+ 	// 'text' takes in a string, indicating the html to display
+ 	// 'that' is required when we run it in the handler, the other 2 are required when we run it to initialise it
+
+	var runScatter = function(that, index, text) {
+
+			file = 'data/world.csv';
+			var scatterIndex;
+			var scatterHtml;
+			var scatterId;
+			var that = that;
+
+			if (arguments.length > 1) {
+				scatterIndex = index;
+				scatterHtml = text;
+			} else {
+				log(that);
+				scatterId = that.attr('id');
+				scatterIndex = scatterLookup[scatterId]();
+				scatterHtml = that.html();
+			}
+
+			categorySelect = 'Population';
+			navigationBouncer = 2; 
+			
+			d3.select('#scatterSpan').html(scatterHtml).style('color','#fff');
+			d3.selectAll('#categorySpan').html('trends').style('color','#ccc'); // set colour; // set neutral category
+			d3.select('#dashSpan').html('summarise').style('color', '#ccc');
+
+			d3.selectAll('li.period').style('display', 'inherit'); // show periods
+			
+			d3.selectAll('.box, .tooltip, #summaryHeadline').remove(); // remove all existing d3-produced elements
+			d3.selectAll('li.change').style('display', 'none'); // zoom
+			d3.selectAll('li.perspective').style('display','none'); // hide perspective option
+			d3.selectAll('li.zoom').style('display','none'); // hide zoom option
+			d3.select('div.legend').style('display', 'none') // hide legend from chart builder 
+			d3.select('div#home').style('display', 'none'); // hide homepage html
+			d3.select('div#loadingContainer').style('display', 'none'); // hide quote
+			
+			// bubble() API
+			// file = file location
+			// country = country
+			// category = question category (Operator, Channels, and so on)
+			// perspective = line, bar, data not used here
+			// xVar = variable to show on x-axis (string) example: "Gender", has to conincide with variable question
+			// yVar = variable to show on y-axis (string) example: "Age", has to conincide with variable question
+			// zVar = variable to show on bubble size (string) example: "Subscription", has to conincide with variable question. If no zVar write "2D"
+			// headline (string)
+			// yLabel for y Axis (String)
+			// xLabelRight (String) leave empty for 2D scatter (if bubble size excluded), useful mainly for brand profile ("more female" right and "more male" left)
+			// xLabelLeft (String) label for y axis
+			// x-, y- and zBarLabel (String) label for the bar charts. if no zVar write "" for zBarLabel
+
+			if(scatterIndex === 0) {
+				bubble(file, countrySelect, categorySelect, perspectiveSelect,
+					'GDP per capita (constant 2005 US$)', 
+					'Population ages 65 and above (% of total)', 
+					'2D',
+					'GDP vs Older Population',
+					'% of population 65+',
+					'GDP per capita',
+					'',
+					'GDP per capita',
+					'% of population 65+',
+					'')
+			}	
+
+			if(scatterIndex === 1) {
+				bubble(file, countrySelect, categorySelect, perspectiveSelect,
+					'GDP per capita (constant 2005 US$)', 
+					'Population ages 0-14 (% of total)', 
+					'2D',
+					'GDP vs Young Population',
+					'% of population 0-14',
+					'GDP per capita',
+					'',
+					'GDP per capita',
+					'% of population 0-14',
+					'')
+			}	
+			
+			if(scatterIndex === 2) {
+				bubble(file, countrySelect, categorySelect, perspectiveSelect,
+					'Adolescent fertility rate (births per 1,000 women ages 15-19)',
+					'Mortality rate, infant (per 1,000 live births)',
+					'2D',
+					'Adolescent fertility vs Mortality',
+					'Infant mortality rate (per 1000)',
+					'Births per 1000 woman between 15 and 19',
+					'',
+					'Births per adolescent woman (15-19)',
+					'Infant mortality rate',
+					'')
+			}
+
+			if(scatterIndex === 3) {
+				bubble(file, countrySelect, categorySelect, perspectiveSelect,
+					'Adolescent fertility rate (births per 1,000 women ages 15-19)',
+					'Survival to age 65 (% of cohort)',
+					'2D',
+					'Adolescent fertility vs Survival beyond 65',
+					'% of people surviving to 65',
+					'Births per 1000 woman between 15 and 19',
+					'',
+					'Births per adolescent woman (15-19)',
+					'% of population 65+',
+					'')
+			}
+
+			if(scatterIndex === 4) {
+				bubble(file, countrySelect, categorySelect, perspectiveSelect,
+					'Population, female (% of total)', 
+					'Birth rate, crude (per 1,000 people)',
+					'Death rate, crude (per 1,000 people)',
+					'Female Population vs Birth rate',
+					'Birth rate',
+					'Female Population in %',
+					'',
+					'Female Population in %',
+					'Birth rate',
+					'Death rate')
+			}
+
+	};
+
+ 	runScatter(undefined, 0, 'gdp vs older population');	
+
 	// primary render function
 	d3.select('button#launchApp').on('mousedown', function() {
 
@@ -379,113 +496,14 @@ function god () {
 		d3.select('div.legend').style('display', 'none') // hide legend from chart builder 
 		
 		navFunc(file, countrySelect, categorySelect, perspectiveSelect, developmentLevelLeft, developmentLevelRight);
+
 	});
-	
+
 	d3.selectAll('li.scatt').on('mousedown', function() {
-		file = 'data/world.csv';
-		var scatterId = d3.select(this).attr('id');
-		var scatterIndex = scatterLookup[scatterId]();
-		var scatterHtml = d3.select(this).html();
-		categorySelect = 'Population';
-		navigationBouncer = 2; 
+
+		var that = d3.select(this);
 		
-		d3.select('#scatterSpan').html(scatterHtml).style('color','#fff');
-		d3.selectAll('#categorySpan').html('trends').style('color','#ccc'); // set colour; // set neutral category
-		d3.select('#dashSpan').html('summarise').style('color', '#ccc');
-
-		d3.selectAll('li.period').style('display', 'inherit'); // show periods
-		
-		d3.selectAll('.box, .tooltip, #summaryHeadline').remove(); // remove all existing d3-produced elements
-		d3.selectAll('li.change').style('display', 'none'); // zoom
-		d3.selectAll('li.perspective').style('display','none'); // hide perspective option
-		d3.selectAll('li.zoom').style('display','none'); // hide zoom option
-		d3.select('div.legend').style('display', 'none') // hide legend from chart builder 
-		d3.select('div#home').style('display', 'none'); // hide homepage html
-		d3.select('div#loadingContainer').style('display', 'none'); // hide quote
-		
-		// bubble() API
-		// file = file location
-		// country = country
-		// category = question category (Operator, Channels, and so on)
-		// perspective = line, bar, data not used here
-		// xVar = variable to show on x-axis (string) example: "Gender", has to conincide with variable question
-		// yVar = variable to show on y-axis (string) example: "Age", has to conincide with variable question
-		// zVar = variable to show on bubble size (string) example: "Subscription", has to conincide with variable question. If no zVar write "2D"
-		// headline (string)
-		// yLabel for y Axis (String)
-		// xLabelRight (String) leave empty for 2D scatter (if bubble size excluded), useful mainly for brand profile ("more female" right and "more male" left)
-		// xLabelLeft (String) label for y axis
-		// x-, y- and zBarLabel (String) label for the bar charts. if no zVar write "" for zBarLabel
-
-		if(scatterIndex === 0) {
-			bubble(file, countrySelect, categorySelect, perspectiveSelect,
-				'GDP per capita (constant 2005 US$)', 
-				'Population ages 65 and above (% of total)', 
-				'2D',
-				'GDP vs Older Population',
-				'% of population 65+',
-				'GDP per capita',
-				'',
-				'GDP per capita',
-				'% of population 65+',
-				'')
-		}	
-
-		if(scatterIndex === 1) {
-			bubble(file, countrySelect, categorySelect, perspectiveSelect,
-				'GDP per capita (constant 2005 US$)', 
-				'Population ages 0-14 (% of total)', 
-				'2D',
-				'GDP vs Young Population',
-				'% of population 0-14',
-				'GDP per capita',
-				'',
-				'GDP per capita',
-				'% of population 0-14',
-				'')
-		}	
-		
-		if(scatterIndex === 2) {
-			bubble(file, countrySelect, categorySelect, perspectiveSelect,
-				'Adolescent fertility rate (births per 1,000 women ages 15-19)',
-				'Mortality rate, infant (per 1,000 live births)',
-				'2D',
-				'Adolescent fertility vs Mortality',
-				'Infant mortality rate (per 1000)',
-				'Births per 1000 woman between 15 and 19',
-				'',
-				'Births per adolescent woman (15-19)',
-				'Infant mortality rate',
-				'')
-		}
-
-		if(scatterIndex === 3) {
-			bubble(file, countrySelect, categorySelect, perspectiveSelect,
-				'Adolescent fertility rate (births per 1,000 women ages 15-19)',
-				'Survival to age 65 (% of cohort)',
-				'2D',
-				'Adolescent fertility vs Survival beyond 65',
-				'% of people surviving to 65',
-				'Births per 1000 woman between 15 and 19',
-				'',
-				'Births per adolescent woman (15-19)',
-				'% of population 65+',
-				'')
-		}
-
-		if(scatterIndex === 4) {
-			bubble(file, countrySelect, categorySelect, perspectiveSelect,
-				'Population, female (% of total)', 
-				'Birth rate, crude (per 1,000 people)',
-				'Death rate, crude (per 1,000 people)',
-				'Female Population vs Birth rate',
-				'Birth rate',
-				'Female Population in %',
-				'',
-				'Female Population in %',
-				'Birth rate',
-				'Death rate')
-		}
+		runScatter(that);
 		
 	});
 
